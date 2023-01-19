@@ -1,0 +1,6 @@
+---
+# Disabling JSON output... remove clutter
+ansible-navigator:
+  playbook-artifact:
+    enable: false
+...

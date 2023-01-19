@@ -3,3 +3,8 @@
 .config 
 .cache
 data/ansible-navigator.log
+# Disable upload RSA KEY
+data/id_rsa
+# Disable Artifact
+data/*.json
+data/.ssh

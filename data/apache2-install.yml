@@ -1,0 +1,11 @@
+---
+- name: Check HTTP
+  hosts: jakarta.stts.edu,surabaya.stts.edu
+  tasks:
+    - apt:
+        name: apache2
+        state: latest
+    - apt:
+        name: w3m
+        state: latest
+...
