@@ -1,0 +1,13 @@
+[surabaya]
+surabaya[1:10].stts.edu
+192.168.9.[30:35]
+
+[jakarta]
+jakarta.stts.edu
+
+[singapore]
+singapore.stts.edu
+
+[id:children]
+surabaya
+jakarta

@@ -1,0 +1,5 @@
+.bash_history
+*.swp
+.config 
+.cache
+data/ansible-navigator.log
