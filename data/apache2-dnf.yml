@@ -21,6 +21,14 @@
         service: https
         permanent: yes
         state: enabled
+    - name: Enable HTTPS and HTTP with Loop
+      ansible.posix.firewalld:
+        service: "{{ item }}"
+        permanent: yes 
+        state: enabled
+      loop:
+        - http 
+        - https
     - name: Install KickStart Validator
       ansible.builtin.dnf:
         name: pykickstart
