@@ -1,11 +1,11 @@
 ---
 - name: Check HTTP
-  hosts: jakarta.stts.edu,surabaya.stts.edu
+  hosts: all
   tasks:
-    - apt:
+    - ansible.builtin.apt:
         name: apache2
         state: latest
-    - apt:
+    - ansible.builtin.apt:
         name: w3m
         state: latest
 ...
