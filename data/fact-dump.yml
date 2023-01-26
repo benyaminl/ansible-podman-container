@@ -1,0 +1,14 @@
+---
+- name: Fact Dump All
+  hosts: fedora.cisco.stts.edu 
+  tasks:
+    - name: Dump all Data Debug
+      ansible.builtin.debug:
+        var: ansible_facts
+    - name: Dump IP
+      ansible.builtin.debug:
+        var: ansible_host
+    - name: Dump SELINUX Status
+      ansible.builtin.debug:
+        var: ansible_facts['selinux']
+...
