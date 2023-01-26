@@ -1,13 +1,16 @@
-[surabaya]
-surabaya[1:10].stts.edu
-192.168.9.[30:35]
+[vm]
+sib.stts.edu
 
-[jakarta]
-jakarta.stts.edu
+[blade]
+elang30.stts.edu
 
-[singapore]
-singapore.stts.edu
+[tower]
+git.sib.stts.edu
 
-[id:children]
-surabaya
-jakarta
+[lab]
+fedora.cisco.stts.edu
+
+[datacenter:children]
+vm
+blade
+tower
