@@ -1,0 +1,45 @@
+---
+- name: Apache DNF Fedora Server
+  hosts: fedora.cisco.stts.edu
+  tasks:
+    - name: Install HTTPD/Apache2
+      ansible.builtin.dnf:
+        name: httpd
+        state: latest
+    - name: Enable and Start HTTP Service
+      ansible.builtin.service:
+        name: httpd
+        enabled: true
+        state: started
+    - name: Enable HTTP Firewall
+      ansible.posix.firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+    - name: Enable HTTPS Firewall
+      ansible.posix.firewalld:
+        service: https
+        permanent: yes
+        state: enabled
+    - name: Install KickStart Validator
+      ansible.builtin.dnf:
+        name: pykickstart
+        state: latest
+    - name: Copy Index HTML
+      ansible.builtin.copy:
+        src: ./www/index.html
+        dest: /var/www/html
+    - name: Test Local Web Server 
+      ansible.builtin.uri:
+        url: http://localhost
+        return_content: yes
+        status_code: 200
+    # This is not possible at all
+    #- name: Enable HTTP/s Firewall
+    #  ansible.posix.firewalld:
+    #    service: 
+    #      - http
+    #      - https
+    #    permanent: yes
+    #    state: enabled
+...
