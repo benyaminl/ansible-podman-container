@@ -1,0 +1,30 @@
+---
+- name: Installing VS Code and YAML
+  hosts: lab-cisco
+  tasks:
+    - name: Add repository VS Code
+      ansible.builtin.yum_repository:
+        name: VSCodeRepo
+        description: VS Code Repository
+        baseurl: https://packages.microsoft.com/yumrepos/vscode
+        gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+        gpgcheck: yes
+    - name: Add DotNet Core Repo
+      ansible.builtin.yum_repository:
+        name: dotnetRepo
+        description: DotNet Repository
+        baseurl: https://packages.microsoft.com/rhel/9/prod/
+        gpgkey: http://packages.microsoft.com:80/rhel/9/prod/repodata/repomd.xml.key
+        gpgcheck: yes
+    - name: yum-clean-metadata
+      ansible.builtin.command:
+        cmd: dnf clean all
+    - name: Install VS Code and Dotnet
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: present
+      loop: 
+        - code
+        - dotnet-sdk-7.0
+        - dotnet-sdk-6.0
+...

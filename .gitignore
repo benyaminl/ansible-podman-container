@@ -8,3 +8,4 @@ data/id_rsa
 # Disable Artifact
 data/*.json
 data/.ssh
+data/host_vars
