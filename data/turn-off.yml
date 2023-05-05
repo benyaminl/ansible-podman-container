@@ -1,0 +1,7 @@
+---
+- name: Turn off all
+  hosts: lab-cisco
+  tasks:
+    - ansible.builtin.command:
+        cmd: shutdown -h now
+...
