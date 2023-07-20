@@ -9,3 +9,4 @@ data/id_rsa
 data/*.json
 data/.ssh
 data/host_vars
+data/custom-inventory
