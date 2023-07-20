@@ -1,0 +1,11 @@
+---
+- name: Clone Git
+  ansible.builtin.git:
+    repo: 'https://github.com/docker/awesome-compose'
+    dest: /tmp/awesome-compose
+- name: Change to Almalinux
+  ansible.builtin.file:
+    path: /tmp/awesome-compose
+    owner: almalinux
+    group: almalinux
+...

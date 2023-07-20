@@ -1,0 +1,27 @@
+---
+# description: |
+#     Install podman, git, pip3, and podman-compose dev from git
+#     For EL Clone (AlmaLinux)
+- name: Install Container Dev
+  hosts: all
+  become: yes
+  tasks: 
+    - name: Installing git, podman, and pip3
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: latest
+      loop: 
+        - git
+        - podman
+        - python3-pip
+    - name: Installing the podman-compose
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - podman-compose
+        - git+https://github.com/containers/podman-compose#devel 
+    - name: Clone Repo
+      ansible.builtin.import_tasks:
+        file: ./container-example.yml
+...
