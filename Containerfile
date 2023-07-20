@@ -1,14 +1,26 @@
-FROM docker.io/fedora:37
-# Or we can use 
-# FROM registry.fedoraproject.org/fedora:37
+# UBI as builder 
+FROM registry.access.redhat.com/ubi9/ubi-minimal:latest as builder
+RUN microdnf install \
+    --installroot /tmp/micro \
+    --setopt=install_weak_deps=0 \
+    --releasever 9 \
+    --nodocs -y \
+    --config /dev/null \
+    --noplugins \
+    --setopt=cachedir=/var/cache/yum \
+    --setopt=reposdir=/etc/yum.repos.d \
+    --setopt=varsdir=/tmp/varsdir \
+    git \
+    podman \
+    python3 \
+    python3-pip
+    # zlib \
+    # libstdc++ \
+    # glibc
 
+# UBI Micro as Container
+FROM registry.access.redhat.com/ubi8/ubi-micro:latest
+COPY --from=builder /tmp/micro/ /
 USER root
-#RUN dnf repolist all
-RUN dnf install python3 python3-pip podman -y
 RUN python3 -m pip install ansible-navigator
-# See @see https://docs.ansible.com/ansible/latest/vault_guide/index.html
-RUN python3 -m pip install ansible-vault
-# RUN dnf install -y ansible-navigator 
-# RUN ansible-navigator --help
-# RUN podman pull quay.io/ansible/creator-ee:v0.9.1
 CMD ["sleep","infinity"]
