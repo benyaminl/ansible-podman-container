@@ -23,4 +23,5 @@ FROM registry.access.redhat.com/ubi8/ubi-micro:latest
 COPY --from=builder /tmp/micro/ /
 USER root
 RUN python3 -m pip install ansible-navigator
+WORKDIR /root
 CMD ["sleep","infinity"]
