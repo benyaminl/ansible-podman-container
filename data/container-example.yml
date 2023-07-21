@@ -3,9 +3,16 @@
   ansible.builtin.git:
     repo: 'https://github.com/docker/awesome-compose'
     dest: /tmp/awesome-compose
+    force: yes
 - name: Change to Almalinux
   ansible.builtin.file:
     path: /tmp/awesome-compose
     owner: almalinux
     group: almalinux
+- name: Lower non root port container map
+  ansible.builtin.lineinfile:
+    path: /etc/systcl.d/podman.conf
+    line: net.ipv4.ip_unprivileged_port_start=20
+    state: present
+    create: true
 ...
