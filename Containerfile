@@ -22,6 +22,6 @@ RUN microdnf install \
 FROM registry.access.redhat.com/ubi8/ubi-micro:latest
 COPY --from=builder /tmp/micro/ /
 USER root
-RUN python3 -m pip install ansible-navigator
+RUN python3 -m pip install ansible-navigator ansible-core ansible
 WORKDIR /root
 CMD ["sleep","infinity"]
