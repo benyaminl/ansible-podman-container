@@ -1,0 +1,40 @@
+---
+- name: Create storage LVM
+  hosts: all
+  become: yes
+  tasks:
+    - name: make sure lvm installed
+      ansible.builtin.dnf: 
+        name: lvm2
+    - name: create storage using lvm ?
+      block: 
+        - name: create parted 
+          community.general.parted:
+            device: /dev/vdb 
+            number: 1
+            flags: [ lvm ]
+            label: gpt
+            part_end: 512MB
+            state: present
+        - name: create vgs research 
+          community.general.lvg:
+            vg: research
+            pesize: 1m
+            pvs: /dev/vdb1
+        - name: create 800m lvs
+          community.general.lvol:
+            size: 800m
+            pvs: /dev/vdb1
+            vg: research 
+            lv: data 
+      rescue:
+        - name: create in 500mb
+          community.general.lvol:
+            size: 480m
+            pvs: /dev/vdb1
+            vg: research 
+            lv: data 
+    - name: debug the lvm var 
+      ansible.builtin.debug:
+        var: ansible_lvm
+...
