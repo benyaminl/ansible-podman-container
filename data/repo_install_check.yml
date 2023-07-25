@@ -1,0 +1,38 @@
+---
+- name: Repository Configuration
+  hosts: all
+  vars: 
+    custom_pkg: simple-agent
+  tasks:
+    - name: Gather all pkg facts
+      ansible.builtin.package_facts:
+        manager: auto
+    - name: Print facts package
+      ansible.builtin.debug:
+        var: ansible_facts['packages'][custom_pkg]
+      when: custom_pkg in ansible_facts['packages']
+    - name: Adding new Repo
+      ansible.builtin.yum_repository:
+        baseurl: http://materials.example.com/yum/repository
+        name: example-internal
+        gpgcheck: yes
+        file: example
+        description: Example Inc. Internal YUM repo
+        state: present
+    - name: Import GPG key 
+      ansible.builtin.rpm_key:
+        key:  http://materials.example.com/yum/repository/RPM-GPG-KEY-example
+        state: present
+    - name: Install {{ custom_pkg }}
+      ansible.builtin.dnf:
+        name: "{{ custom_pkg }}"
+        state: present
+    - name: Gather all pkg facts
+      ansible.builtin.package_facts:
+        manager: auto
+    - name: Print facts package
+      ansible.builtin.debug:
+        var: ansible_facts['packages'][custom_pkg]
+      when: custom_pkg in ansible_facts['packages']
+
+...
