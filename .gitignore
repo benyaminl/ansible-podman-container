@@ -10,3 +10,4 @@ data/*.json
 data/.ssh
 data/host_vars
 data/custom-inventory
+data/collections/ansible_collections

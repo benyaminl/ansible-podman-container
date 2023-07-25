@@ -1,0 +1,4 @@
+---
+collections:
+- name: https://galaxy.ansible.com/download/community-general-7.2.0.tar.gz
+...
