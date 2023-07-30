@@ -1,0 +1,22 @@
+---
+- name: All play about libvirtd
+  hosts: local 
+  tasks: 
+    - name: List VMs
+      community.libvirt.virt:
+        command: list_vms
+      register: all_vm
+    - name: Debug VM List 
+      ansible.builtin.debug:
+        var: all_vm.list_vms
+    - name: Try Print
+      ansible.builtin.debug: 
+        msg: Ada VM nya
+      when: "'centos-stream9' in all_vm.list_vms"
+    - name: Try UUID
+      ansible.builtin.debug:
+        msg: "{{ 'string' | to_uuid }}"
+    - name: Make new random MacAdd
+      ansible.builtin.debug:
+        msg: "{{ '52:54:00' | community.general.random_mac }}"
+...

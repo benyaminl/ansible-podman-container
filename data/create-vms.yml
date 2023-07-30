@@ -1,0 +1,45 @@
+---
+- name: Create VMS on libvirt 
+  hosts: local 
+  vars:
+    new_vm_name: c92-coba
+  tasks: 
+    - name: Create cloud init from Jinja2 Template
+      ansible.builtin.template:
+        src: templates/meta-data.j2
+        dest: /home/ben/Code/cloudInit/ci-iso/almalinux/meta-data
+        owner: ben
+        group: ben
+    - name: Build the ISO - Depended to my X220
+      ansible.builtin.command: 
+        chdir: /home/ben/Code/cloudInit/ci-iso/almalinux
+        cmd: /usr/bin/genisoimage -output cloudinit.iso -volid cidata -joliet -rock user-data meta-data
+    - name: Change the owner of ISO to Qemu
+      ansible.builtin.file:
+        path: /home/ben/Code/cloudInit/ci-iso/almalinux/cloudinit.iso
+        owner: qemu 
+        group: qemu
+    - name: Copy the qcow2 to dest with new name {{ new_vm_name }}
+      ansible.builtin.copy:
+        src: /home/ben/Downloads/ISO/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2
+        remote_src: true
+        dest: /var/lib/libvirt/images/{{ new_vm_name }}.qcow2
+    - name: Create new VM
+      community.libvirt.virt:
+        command: define
+        xml: "{{ lookup('template', 'templates/vm_template.j2') }}"
+        autostart: no
+    - name: Define List VMs Variable
+      community.libvirt.virt:
+        command: list_vms
+      register: all_vm
+    - name: Check if new VM is created 
+      ansible.builtin.debug: 
+        msg: Ada VM nya
+      when: "new_vm_name in all_vm.list_vms"
+    - name: Try Start VM when exists
+      community.libvirt.virt:
+        name: "{{ new_vm_name }}"
+        state: running
+      when: "new_vm_name in all_vm.list_vms"
+...

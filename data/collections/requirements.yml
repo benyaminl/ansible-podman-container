@@ -1,4 +1,5 @@
 ---
 collections:
 - name: https://galaxy.ansible.com/download/community-general-7.2.0.tar.gz
+- name: https://galaxy.ansible.com/download/community-libvirt-1.2.0.tar.gz
 ...

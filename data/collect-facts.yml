@@ -1,0 +1,13 @@
+---
+- name: Collect Facts
+  hosts: all
+  become: yes
+- name: Get List of LVM?
+  hosts: all
+  become: yes
+  tasks:
+    - name: Debug LVM Facts
+      ansible.builtin.debug:
+        var: ansible_lvm
+    - name: Set LVM
+...

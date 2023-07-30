@@ -11,9 +11,14 @@ git.sib.stts.edu
 fedora.cisco.stts.edu
 
 [lab-cisco]
-192.168.101.[101:105]
+192.168.101.116
+192.168.101.117
+192.168.101.118
 
 [datacenter:children]
 vm
 blade
 tower
+
+[local]
+10.10.10.1

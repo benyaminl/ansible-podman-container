@@ -5,6 +5,9 @@
 data/ansible-navigator.log
 # Disable upload RSA KEY
 data/id_rsa
+data/id_rsa.pub
+data/.ansible
+data/.lesshst
 # Disable Artifact
 data/*.json
 data/.ssh
